@@ -28,7 +28,7 @@ public class EditModel : PageModel
 
 		if (entryList.Count == 0) 
 		{
-			RedirectToPage("Error");
+			RedirectToPage("/Error");
 			return;
 		}
 
@@ -49,7 +49,10 @@ public class EditModel : PageModel
 	{
 		if (ModelState.IsValid)
 		{
-			_ = await _mediator.Send(UpdateAddressRequest);
+			var response = await _mediator.Send(UpdateAddressRequest);
+			if (response == Guid.Empty) {
+				return RedirectToPage("/Error");
+			}
 			return RedirectToPage("Index");
 		}
 		return Page();

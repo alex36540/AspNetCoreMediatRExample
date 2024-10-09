@@ -23,7 +23,7 @@ public class UpdateAddressHandler
 
 		if (entryList.Count == 0) 
 		{
-			return Guid.Empty;
+			return await Task.FromResult(Guid.Empty);
 		}
 
         AddressBookEntry entry = entryList[0];
@@ -40,6 +40,6 @@ public class UpdateAddressHandler
             );
         }
 
-		return await Task.FromResult(entry.Id);
+		return await Task.FromResult(request.Id);
 	}
 }

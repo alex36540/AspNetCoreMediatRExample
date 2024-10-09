@@ -17,19 +17,18 @@ public class DeleteAddressHandler
 
 	public async Task<Guid> Handle(DeleteAddressRequest request, CancellationToken cancellationToken)
 	{
-		// Get entry from repo and check if it exists
+		// Get entry from repo and check if it exists, then remove
 		var byId = new EntryByIdSpecification(request.Id);
 		var entryList = _repo.Find(byId);
-
+        
 		if (entryList.Count == 0) 
 		{
 			return await Task.FromResult(Guid.Empty);
 		}
 
         AddressBookEntry entry = entryList[0];
-
-
 		_repo.Remove(entry);
+
 		return await Task.FromResult(entry.Id);
 	}
 }
